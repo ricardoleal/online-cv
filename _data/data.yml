@@ -78,7 +78,7 @@ experiences:
           Developed and maintained infrastructure as code, keeping it DRY (Don't Repeat Yourself) as much as possible.\
           Migrating platforms for Machine Learning and Data transformation to Kubernetes.\
           Implementing Database as a Service (DBaaS) in Kubernetes.\
-          Continuously driving the adoption of new tools for Platform Portals, Continuous Promotion, and Cloud-native functions.
+          Continuously driving the adoption of new tools for Platform Portals, Continuous Promotion, and Cloud-native functions.\
           Stack:
             - AWS
             - Terraform
