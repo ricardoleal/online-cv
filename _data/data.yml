@@ -70,8 +70,28 @@ education:
 experiences:
     title: Experiences
     info:
+      - role: Lead DevOps / Platform Engineer
+        time: 2023 - Present
+        company: Siemens SMO, Aveiro
+        details: |
+          Led the migration from Click-ops to Git-ops.\
+          Developed and maintained infrastructure as code, keeping it DRY (Don't Repeat Yourself) as much as possible.\
+          Migrating platforms for Machine Learning and Data transformation to Kubernetes.\
+          Implementing Database as a Service (DBaaS) in Kubernetes.\
+          Continuously driving the adoption of new tools for Platform Portals, Continuous Promotion, and Cloud-native functions.
+          Stack:
+            - AWS
+            - Terraform
+            - Terragrunt
+            - Airflow
+            - Ansible
+            - Atlantis
+            - Grafana Cloud
+            - K8s (EKS) 
+            - ArgoCD
+            - Atlantis
       - role: Site Reliability Engineer
-        time: 2021 - Present
+        time: 2021 - 2023
         company: Talkdesk, Porto
         details: |
           Developing and maintaining IAC code/modules/providers to manage cloud infrastructure.\
