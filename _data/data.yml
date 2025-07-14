@@ -89,7 +89,6 @@ experiences:
             - Grafana Cloud
             - K8s (EKS) 
             - ArgoCD
-            - Atlantis
       - role: Site Reliability Engineer
         time: 2021 - 2023
         company: Talkdesk, Porto
