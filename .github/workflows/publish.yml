@@ -46,7 +46,15 @@ jobs:
         run: bundle exec jekyll build -d _site --trace
 
       - name: Verify print page was rendered
-        run: test -f _site/print/index.html && test -f _site/assets/css/print.css
+        run: |
+          echo "--- _site root ---"
+          ls _site
+          echo "--- _site/print ---"
+          ls -la _site/print || echo "MISSING _site/print"
+          echo "--- _site/assets/css ---"
+          ls -la _site/assets/css || echo "MISSING _site/assets/css"
+          test -f _site/print/index.html || (echo "MISSING _site/print/index.html" && exit 1)
+          test -f _site/assets/css/print.css || (echo "MISSING _site/assets/css/print.css" && exit 1)
 
       - name: Setup Chrome
         uses: browser-actions/setup-chrome@v1
