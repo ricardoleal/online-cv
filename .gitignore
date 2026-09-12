@@ -3,3 +3,6 @@ _site/
 .sass-cache/
 .jekyll-metadata
 .jekyll-cache
+
+# Generated PDF lives only on the CV (Pages) branch via CI
+assets/cv.pdf

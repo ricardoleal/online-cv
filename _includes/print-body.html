@@ -1,0 +1,51 @@
+{% comment %}
+  Single-source print body. Same _data/data.yml as the online version,
+  rendered with ATS-friendly linear markup. Every section is guarded by
+  the include's own {% if %}, so disabled sections stay hidden.
+{% endcomment %}
+
+{% include career-profile.html %}
+
+{% include education-print.html %}
+
+{% include experiences.html %}
+
+{% include certifications.html %}
+
+{% include projects.html %}
+
+{% include oss-contributions.html %}
+
+{% include publications.html %}
+
+{% include skills.html %}
+
+{% assign languages = site.data.data.sidebar.languages %}
+{% if languages %}
+<section class="section">
+  <h2 class="section-title">{{ languages.title }}</h2>
+  <ul class="print-list">
+    {% for language in languages.info %}
+    <li>{{ language.idiom }} ({{ language.level }})</li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}
+
+{% assign interests = site.data.data.sidebar.interests %}
+{% if interests %}
+<section class="section">
+  <h2 class="section-title">{{ interests.title }}</h2>
+  <ul class="print-list">
+    {% for interest in interests.info %}
+    <li>
+      {% if interest.link %}
+      <a href="{{ interest.link }}">{{ interest.item }}</a>
+      {% else %}
+      {{ interest.item }}
+      {% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}

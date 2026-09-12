@@ -1,0 +1,19 @@
+{% assign sidebar = site.data.data.sidebar %}
+<div class="print-header">
+  {% if sidebar.name %}
+  <h1 class="name">{{ sidebar.name }}</h1>
+  {% endif %}
+  {% if sidebar.tagline %}
+  <div class="tagline">{{ sidebar.tagline }}</div>
+  {% endif %}
+  <div class="print-contact">
+    {% assign sep = "" %}
+    {% if sidebar.email %}{{ sep }}<a href="mailto:{{ sidebar.email }}">{{ sidebar.email }}</a>{% assign sep = " • " %}{% endif %}
+    {% if sidebar.phone %}{{ sep }}<a href="tel:{{ sidebar.phone }}">{{ sidebar.phone }}</a>{% assign sep = " • " %}{% endif %}
+    {% if sidebar.linkedin %}{{ sep }}<a href="https://linkedin.com/in/{{ sidebar.linkedin }}">linkedin.com/in/{{ sidebar.linkedin }}</a>{% assign sep = " • " %}{% endif %}
+    {% if sidebar.github %}{{ sep }}<a href="https://github.com/{{ sidebar.github }}">github.com/{{ sidebar.github }}</a>{% assign sep = " • " %}{% endif %}
+    {% if sidebar.website %}{{ sep }}<a href="https://{{ sidebar.website }}">{{ sidebar.website }}</a>{% assign sep = " • " %}{% endif %}
+    {% if sidebar.citizenship %}{{ sep }}{{ sidebar.citizenship }}{% assign sep = " • " %}{% endif %}
+    {% if sidebar.timezone %}{{ sep }}{{ sidebar.timezone }}{% endif %}
+  </div>
+</div>

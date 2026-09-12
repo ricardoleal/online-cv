@@ -1,0 +1,84 @@
+name: Publish CV
+
+# Commit to master -> build + validate -> print /print to PDF ->
+# merge everything into CV (GitHub Pages source branch).
+# No Docker involved; Pages keeps its legacy "Deploy from a branch" setup.
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - "_data/**"
+      - "_includes/**"
+      - "_layouts/**"
+      - "_sass/**"
+      - "assets/**"
+      - "index.html"
+      - "print.html"
+      - "_config.yml"
+      - "Gemfile"
+      - "Gemfile.lock"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-cv
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout master
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.1"
+          bundler-cache: true
+
+      - name: Build Jekyll site
+        run: bundle exec jekyll build -d _site --trace
+
+      - name: Verify print page was rendered
+        run: test -f _site/print/index.html && test -f _site/assets/css/print.css
+
+      - name: Setup Chrome
+        uses: browser-actions/setup-chrome@v1
+
+      - name: Print /print to PDF (A4, no headers)
+        run: |
+          CHROME_BIN="$(command -v chrome || command -v google-chrome)"
+          "$CHROME_BIN" --headless --disable-gpu --no-sandbox \
+            --print-to-pdf=/tmp/cv.pdf --print-to-pdf-no-header \
+            "file://$GITHUB_WORKSPACE/_site/print/index.html"
+          ls -la /tmp/cv.pdf
+
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: cv-pdf
+          path: /tmp/cv.pdf
+
+      - name: Publish to CV branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch origin CV
+          git checkout -B CV origin/CV
+          # master is source of truth; prefer it on conflicts
+          git merge --no-edit -X theirs origin/master
+          mkdir -p assets
+          cp /tmp/cv.pdf assets/cv.pdf
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Nothing to publish."
+          else
+            git commit -m "chore: publish from master ${GITHUB_SHA} [skip ci]"
+            git push origin CV
+          fi
