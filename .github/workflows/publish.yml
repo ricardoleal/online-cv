@@ -18,6 +18,7 @@ on:
       - "_config.yml"
       - "Gemfile"
       - "Gemfile.lock"
+      - ".github/workflows/**"
   workflow_dispatch:
 
 permissions:
@@ -51,6 +52,10 @@ jobs:
           ls _site
           echo "--- _site/print ---"
           ls -la _site/print || echo "MISSING _site/print"
+          echo "--- print-related files anywhere in _site ---"
+          find _site -iname "*print*" | head -n 20
+          echo "--- css files in _site ---"
+          find _site -name "*.css" | head -n 20
           echo "--- _site/assets/css ---"
           ls -la _site/assets/css || echo "MISSING _site/assets/css"
           test -f _site/print/index.html || (echo "MISSING _site/print/index.html" && exit 1)
